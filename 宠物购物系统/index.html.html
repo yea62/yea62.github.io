@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetVibe - 宠物用品一站式购物平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #FF6B35;      
+            --secondary: #F25C54;     
+            --accent: #FFB238;        
+            --light: #FFF9F0;         
+            --dark: #2D2D2D;          
+            --success: #38b000;
+            --warning: #FF9E00;
+            --gray: #6c757d;
+            --light-gray: #F0E6D6;    
+            --border-radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #FFFDF8; 
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links a:hover {
+            color: #FFF;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+        
+        .nav-links i {
+            margin-right: 5px;
+        }
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-icons i {
+            font-size: 22px;
+            margin-left: 20px;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .header-icons i:hover {
+            transform: scale(1.1);
+        }
+        
+        .cart-icon {
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            font-size: 12px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+       
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            margin-top: 30px;
+            min-height: 80vh;
+        }
+        
+      
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-title i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .pet-list {
+            list-style: none;
+        }
+        
+        .pet-item {
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .pet-item:hover, .pet-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pet-item i {
+            margin-right: 10px;
+        }
+        
+        .add-pet {
+            width: 100%;
+            padding: 10px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .add-pet:hover {
+            background: #E6A031;
+        }
+        
+        .category-item {
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border-radius: var(--border-radius);
+        }
+        
+        .category-item:hover {
+            background: var(--light);
+            color: var(--primary);
+        }
+        
+        .category-item i {
+            margin-right: 10px;
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+        
+       
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            max-width: 80%;
+            font-size: 18px;
+        }
+        
+       
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            border-bottom-color: var(--accent);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+       
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .view-all:hover {
+            color: var(--secondary);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 180px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .sale-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-details {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .product-brand {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 10px;
+            flex-grow: 1;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .old-price {
+            font-size: 14px;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+        
+        .add-to-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            background: var(--light);
+            color: var(--primary);
+            padding: 10px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .add-to-cart:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .add-to-cart i {
+            margin-right: 8px;
+        }
+        
+        
+        footer {
+            background: #2D2D2D;
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            color: var(--accent);
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-links a i {
+            margin-right: 10px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #495057;
+            color: #adb5bd;
+            font-size: 14px;
+        }
+        
+       
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.7s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        
+      
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+            
+            .welcome-text {
+                max-width: 100%;
+            }
+        }
+        
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+            transform: translateY(-50px);
+            opacity: 0;
+            animation: modalShow 0.4s ease forwards;
+        }
+        
+        @keyframes modalShow {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+        
+        .modal-body {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            padding: 0 25px 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #E65A2F;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .btn-outline:hover {
+            background: var(--light);
+        }
+        
+       
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+       
+        .product-detail-page {
+            padding: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .back-to-shop {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .back-to-shop i {
+            margin-right: 5px;
+        }
+        
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .product-large-image {
+            height: 400px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(to bottom right, #FFE8D6, #FFD8B8);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-info h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .product-info .product-brand {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .detail-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .current-price-lg {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .old-price-lg {
+            font-size: 22px;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-left: 15px;
+        }
+        
+        .product-description {
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .quantity-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            height: 40px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid var(--light-gray);
+            border-right: 1px solid var(--light-gray);
+            font-size: 18px;
+        }
+        
+        .btn-primary-lg {
+            padding: 0 30px;
+            font-size: 18px;
+        }
+        
+      
+        .cart-page {
+            padding: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .cart-items {
+            margin-bottom: 30px;
+        }
+        
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--light-gray);
+            align-items: center;
+        }
+        
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(to bottom right, #FFE8D6, #FFD8B8);
+        }
+        
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-item-quantity input {
+            width: 50px;
+            text-align: center;
+            margin: 0 10px;
+        }
+        
+        .remove-item {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .cart-summary {
+            padding: 20px;
+            background: var(--light);
+            border-radius: var(--border-radius);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .total-row {
+            font-weight: 700;
+            font-size: 20px;
+            margin-top: 15px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+       
+        .health-page {
+            padding: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .pet-profile {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .pet-photo {
+            height: 250px;
+            border-radius: var(--border-radius);
+            background: linear-gradient(to bottom right, #FFE8D6, #FFB238);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+        }
+        
+        .pet-info h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .pet-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .pet-stat {
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .health-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .health-records {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .record-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .record-date {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .record-details {
+            line-height: 1.8;
+        }
+        
+       
+        .tag {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+       
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+       
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+   
+    <header>
+        <div class="container header-container">
+            <div class="logo" onclick="switchPage('home')">
+                <i class="fas fa-paw"></i>
+                <span>PetVibe</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="switchPage('home')"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#" onclick="switchPage('shop')"><i class="fas fa-shopping-bag"></i> 商城</a></li>
+                <li><a href="./位置.html"><i class="fas fa-map-marker-alt"></i> 门店位置</a></li>
+                <li>
+                    <a href="./档案.html" onclick="switchPage('health')">
+                        <i class="fas fa-heartbeat"></i> 健康档案</a></li>
+            </ul>
+            <div class="header-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-user"></i>
+                <div class="cart-icon" onclick="switchPage('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+       
+        <div class="dashboard page active" id="home">
+           
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">
+                        <i class="fas fa-paw"></i>
+                        <a href="./档案.html" onclick="switchPage('health')">
+                        <span>我的宠物档案</span>
+                    </div>
+                    <ul class="pet-list">
+                        <li class="pet-item active">
+                            <i class="fas fa-dog"></i>
+                            <span>豆豆 (金毛犬)</span>
+                        </li>
+                        <li class="pet-item">
+                            <i class="fas fa-cat"></i>
+                            <span>咪咪 (英国短毛猫)</span>
+                        </li>
+                        <li class="pet-item">
+                            <i class="fas fa-dog"></i>
+                            <span>球球 (柯基犬)</span>
+                        </li>
+                    </ul>
+                    <button class="add-pet" id="addPetBtn">
+                        <i class="fas fa-plus"></i> 添加新宠物
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">
+                        <i class="fas fa-list"></i>
+                        <span>商品分类</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('food')">
+                        <i class="fas fa-bone"></i>
+                        <span>宠物食品</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('medicine')">
+                        <i class="fas fa-pills"></i>
+                        <span>宠物药品</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('clothing')">
+                        <i class="fas fa-tshirt"></i>
+                        <span>宠物服饰</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('supplies')">
+                        <i class="fas fa-home"></i>
+                        <span>宠物用品</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('toys')">
+                        <i class="fas fa-baseball-ball"></i>
+                        <span>宠物玩具</span>
+                    </div>
+                    <div class="category-item" onclick="filterProducts('grooming')">
+                        <i class="fas fa-bath"></i>
+                        <span>洗护美容</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <div class="sidebar-title">
+                        <i class="fas fa-fire"></i>
+                        <span>热门标签</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag" onclick="filterProducts('sale')">限时特惠</span>
+                        <span class="tag" onclick="filterProducts('new')">新品上市</span>
+                        <span class="tag" onclick="filterProducts('food')">营养主食</span>
+                        <span class="tag" onclick="filterProducts('snacks')">天然零食</span>
+                    </div>
+                </div>
+            </aside>
+            
+           
+            <main class="main-content">
+                <section class="welcome-banner animate-fade">
+                    <h1 class="welcome-title">欢迎来到PetVibe，豆豆的主人!</h1>
+                    <p class="welcome-text">根据豆豆的信息（金毛犬，3岁，体重30kg），我们为您推荐了这些适合它的优质商品</p>
+                </section>
+                
+                <section class="features animate-fade delay-1">
+                    <div class="features-grid">
+                        <div class="feature-card" onclick="switchPage('health')">
+                            <div class="feature-icon">
+                                <i class="fas fa-notes-medical"></i>
+                            </div>
+                            <h3 class="feature-title">健康档案</h3>
+                            <p>为宠物建立健康档案，记录疫苗接种和体检信息</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-qrcode"></i>
+                                <a href="./防伪溯源.html" onclick="switchPage('health')">
+                            </div>
+                            <h3 class="feature-title">防伪溯源</h3>
+                            <p>扫码查询商品生产源头，确保正品品质</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-video"></i>
+                                <a href="./直播.html" onclick="switchPage('health')">
+                            </div>
+                            <h3 class="feature-title">直播专区</h3>
+                            <p>观看专业宠物医生和美容师的直播分享</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="recommended-products animate-fade delay-2">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-star"></i> 为您推荐</h2>
+                        <a href="#" class="view-all" onclick="switchPage('shop')">查看全部 <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card" onclick="viewProductDetail('p1')">
+                            <div class="product-image" style="background-image: url('./狗粮.jpg'); background-size: cover;"></div>
+                            <div class="product-details">
+                                <div class="product-brand">ROYAL CANIN</div>
+                                <div class="product-name">金毛犬专用成犬粮 12kg</div>
+                                <div class="product-price">
+                                    <span class="current-price">¥649</span>
+                                    <span class="old-price">¥699</span>
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart(event, 'p1')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                            </div>
+                        </div>
+                    </section> 
+                    <section class="new-products animate-fade delay-3">         
+                        <div class="product-card" onclick="viewProductDetail('p2')">
+                            <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFB238);">
+                                <span class="sale-badge">特惠</span>
+                             
+                                <img src="./风干肉干.jpg" alt="天然风干牛肉干" class="meat-image">
+                            </div>
+                            <div class="product-details">
+                                <div class="product-brand">ZEAL</div>
+                                <div class="product-name">天然风干牛肉干 1000g</div>
+                                <div class="product-price">
+                                    <span class="current-price">¥198</span>
+                                    <span class="old-price">¥258</span>
+                                </div>
+                                <button class="add-to-cart" onclick="add-To-Cart(event, 'p2')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                            </div>
+                        </div>
+                        
+                        <style>
+                        
+                        .meat-image {
+                            display: block;
+                            max-width: 86%;
+                            max-height: 160px;
+                            margin: 8px auto 0;
+                            border-radius: 10px;
+                            object-fit: cover;
+                            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+                            border: 1px solid rgba(0, 0, 0, 0.05);
+                        }
+                        </style>
+                        
+                        <div class="product-card" onclick="viewProductDetail('p3')">
+                            <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FF6B35);">
+                        
+                                <div class="toy-image-container">
+                                    <img src="./葫芦玩具.jpg" alt="KONG超耐用葫芦玩具" class="toy-image">
+                                </div>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-brand">KONG</div>
+                                <div class="product-name">超耐用经典葫芦玩具</div>
+                                <div class="product-price">
+                                    <span class="current-price">¥89</span>
+                                </div>
+                                <button class="addToCart" onclick="addToCart(event, 'p3')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                            </div>
+                        </div>
+                        
+                        <style>
+    
+                        .toy-image-container {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100%;
+                            padding: 20px 0;
+                        }
+                        
+                        .toy-image {
+                            max-height: 180px;
+                            width: auto;
+                            border-radius: 16px;
+                            box-shadow: 
+                                0 6px 12px rgba(0, 0, 0, 0.15),
+                                0 0 0 3px rgba(255, 255, 255, 0.3);
+                            transform: rotate(-5deg);
+                            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+                        }
+                        </style>
+                        
+                        <div class="product-card" onclick="viewProductDetail('p4')">
+                            <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #F25C54);">
+                               
+                                <img src="./排毛梳.jpg" alt="FURMINATOR金毛用除毛梳" style="
+                                    max-width: 80%;
+                                    max-height: 160px;
+                                    display: block;
+                                    margin: 0 auto;
+                                    position: relative;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    border-radius: 8px;
+                                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                                ">
+                            </div>
+                            <div class="product-details">
+                                <div class="product-brand">FURMINATOR</div>
+                                <div class="product-name">金毛用除毛梳</div>
+                                <div class="product-price">
+                                    <span class="current-price">¥179</span>
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart(event, 'p4')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                            </div>
+                        </div>
+                 <section/>
+                
+                <section class="new-products animate-fade delay-3">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-fire"></i> 热门商品</h2>
+                        <a href="#" class="view-all" onclick="switchPage('shop')">查看全部 <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card" onclick="viewProductDetail('p5')">
+                            <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FF9E00);">
+                               
+                                <img src="./饮水机.jpg" alt="PETKIT智能饮水机" style="
+                                    max-width: 90%;
+                                    max-height: 180px;
+                                    display: block;
+                                    margin: 0 auto;
+                                    position: relative;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    border-radius: 10px;
+                                    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+                                    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+                                    border: 1px solid rgba(255,255,255,0.3);
+                                ">
+
+                            </div>
+                            <div class="product-details">
+                                <div class="product-brand">PETKIT</div>
+                                <div class="product-name">智能饮水机</div>
+                                <div class="product-price">
+                                    <span class="current-price">¥249</span>
+                                    <span class="old-price">¥299</span>
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart(event, 'p5')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        <div class="product-card" onclick="viewProductDetail('p6')">
+    <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFD166);">
+      
+        <img src="./冻干.jpg" alt="K9天然冻干生骨肉" style="
+            display: block;
+            max-width: 92%;
+            max-height: 170px;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 12px;
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.1),
+                0 0 0 2px rgba(255, 255, 255, 0.4);
+        ">
+    </div>
+    <div class="product-details">
+        <div class="product-brand">K9</div>
+        <div class="product-name">天然冻干生骨肉</div>
+        <div class="product-price">
+            <span class="current-price">¥158</span>
+        </div>
+        <button class="add-to-cart" onclick="addToCart(event, 'p6')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+    </div>
+</div>
+                        
+<div class="product-card" onclick="viewProductDetail('p7')">
+    <div class="product-image" style="
+        background: linear-gradient(to bottom right, rgba(255, 232, 214, 0.6), rgba(255, 179, 71, 0.4));
+        position: relative;
+        overflow: hidden;
+    ">
+        <span class="sale-badge">新品</span>
+        
+        
+        <div class="litter-display">
+          
+            <div class="litter-box" style="
+                width: 110px;
+                height: 70px;
+                background: #f8f8f8;
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 8px 8px 16px 16px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            "></div>
+            
+           
+            <img src="./猫砂.jpg" alt="PETSHY除臭豆腐猫砂" style="
+                max-width: 100px;
+                max-height: 120px;
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2;
+                filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+            ">
+        </div>
+    </div>
+    <div class="product-details">
+        <div class="product-brand">PETSHY</div>
+        <div class="product-name">除臭豆腐猫砂</div>
+        <div class="product-price">
+            <span class="current-price">¥49</span>
+        </div>
+        <button class="add-to-cart" onclick="addToCart(event, 'p7')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+    </div>
+</div>
+
+<style>
+
+.litter-display::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 4px;
+    height: 70px;
+    background: linear-gradient(to bottom, transparent 10%, #d3d3d3 60%, transparent 100%);
+    transform: translateX(-50%);
+    animation: pour 2s infinite ease-in;
+    z-index: 1;
+}
+
+@keyframes pour {
+    0%, 100% { height: 50px; opacity: 0.8; }
+    50% { height: 70px; opacity: 1; }
+}
+</style>
+                        
+<div class="product-card" onclick="viewProductDetail('p8')">
+    <div class="product-image" style="
+        background: linear-gradient(to bottom right, rgba(255, 232, 214, 0.8), rgba(255, 154, 139, 0.4));
+        position: relative;
+        overflow: hidden;
+    ">
+    
+        <div class="powder-container" style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 
+                0 0 0 10px rgba(255, 255, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        ">
+           
+            <img src="./羊奶粉.jpg" alt="ICHIBAN宠物用羊奶粉" style="
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 100%;
+                object-fit: cover;
+            ">
+        </div>
+        
+       
+        <div class="powder-particles" style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        ">
+            <div style="
+                position: absolute;
+                top: 30%;
+                left: 40%;
+                width: 10px;
+                height: 10px;
+                background: rgba(255, 245, 220, 0.8);
+                border-radius: 50%;
+                box-shadow: 
+                    0 0 10px rgba(255, 245, 220, 0.8),
+                    0 0 20px rgba(255, 245, 220, 0.6);
+                animation: float 3s infinite ease-in-out;
+            "></div>
+            <div style="
+                position: absolute;
+                top: 25%;
+                left: 60%;
+                width: 6px;
+                height: 6px;
+                background: rgba(255, 245, 220, 0.8);
+                border-radius: 50%;
+                box-shadow: 
+                    0 0 8px rgba(255, 245, 220, 0.8),
+                    0 0 15px rgba(255, 245, 220, 0.6);
+                animation: float 4s infinite ease-in-out;
+                animation-delay: 0.5s;
+            "></div>
+        </div>
+    </div>
+    <div class="product-details">
+        <div class="product-brand">ICHIBAN</div>
+        <div class="product-name">宠物用羊奶粉</div>
+        <div class="product-price">
+            <span class="current-price">¥109</span>
+        </div>
+        <button class="add-to-cart" onclick="addToCart(event, 'p8')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+    </div>
+</div>
+
+<style>
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); opacity: 0.8; }
+    50% { transform: translate(10px, -15px); opacity: 1; }
+}
+</style>
+        
+     
+        <div class="page" id="shop">
+            <div class="product-detail-page" style="display: none;" id="productDetail"></div>
+            
+            <div id="shopContent">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-shopping-bag"></i> 宠物用品商城</h2>
+                    <div class="search-bar" style="display: flex; max-width: 400px;">
+                        <input type="text" placeholder="搜索商品名称或品牌" style="flex:1; padding:10px 15px; border:1px solid var(--light-gray); border-radius: var(--border-radius) 0 0 var(--border-radius);">
+                        <button style="background:var(--primary); color:white; border:none; padding:0 20px; border-radius:0 var(--border-radius) var(--border-radius) 0;"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <div class="section-header" style="margin-top:20px;">
+                    <div style="display:flex; gap:15px;">
+                        <button class="btn-outline" onclick="filterProducts('all')">全部商品</button>
+                        <button class="btn-outline" onclick="filterProducts('sale')">特价商品</button>
+                        <button class="btn-outline" onclick="filterProducts('new')">新品上市</button>
+                    </div>
+                    <select style="padding:8px 15px; border:1px solid var(--light-gray); border-radius:var(--border-radius);">
+                        <option>默认排序</option>
+                        <option>价格从低到高</option>
+                        <option>价格从高到低</option>
+                        <option>销量排序</option>
+                    </select>
+                </div>
+                
+                <div class="products-grid" style="margin-top:30px;">
+                   
+                </div>
+            </div>
+        </div>
+        
+        <!-- 购物车页 -->
+        <div class="page" id="cart">
+            <div class="cart-page">
+                <h2 class="section-title"><i class="fas fa-shopping-cart"></i> 购物车</h2>
+                
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="cart-item-image"style="background: linear-gradient(to bottom right, #FFE8D6, #FFD8B8);"></div>
+                        <div class="cart-item-details">
+                            <h3>金毛犬专用成犬粮 12kg</h3>
+                            <div class="cart-item-price">¥649</div>
+                            <button class="remove-item" onclick="removeCartItem(this)">删除</button>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-item">
+                        <div class="cart-item-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFB238);"></div>
+                        <div class="cart-item-details">
+                            <h3>天然风干牛肉干 1000g</h3>
+                            <div class="cart-item-price">¥198</div>
+                            <button class="remove-item" onclick="removeCartItem(this)">删除</button>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="2" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-item">
+                        <div class="cart-item-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FF6B35);"></div>
+                        <div class="cart-item-details">
+                            <h3>超耐用经典葫芦玩具</h3>
+                            <div class="cart-item-price">¥89</div>
+                            <button class="remove-item" onclick="removeCartItem(this)">删除</button>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <input type="number" class="quantity-input" value="1" min="1">
+                            <button class="quantity-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>商品总价:</span>
+                        <span>¥1134</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>运费:</span>
+                        <span>¥0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>优惠:</span>
+                        <span>-¥50</span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>总计:</span>
+                        <span>¥1084</span>
+                    </div>
+                    
+                    <button class="btn btn-primary checkout-btn pulse" onclick="alert('订单提交成功！感谢您的购物')">结算订单</button>
+                </div>
+            </div>
+        </div>
+        
+       
+        <div class="page" id="health">
+            <div class="health-page">
+                <h2 class="section-title"><i class="fas fa-heartbeat"></i> 宠物健康档案</h2>
+                
+                <div class="pet-profile">
+                    <div class="pet-photo">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <div class="pet-info">
+                        <h2>豆豆</h2>
+                        <div>品种：金毛犬</div>
+                        <div>年龄：3岁</div>
+                        <div>性别：公（已绝育）</div>
+                        
+                        <div class="pet-stats">
+                            <div class="pet-stat">
+                                <div class="stat-value">30.5</div>
+                                <div class="stat-label">体重 (kg)</div>
+                            </div>
+                            <div class="pet-stat">
+                                <div class="stat-value">101</div>
+                                <div class="stat-label">心跳 (次/分)</div>
+                            </div>
+                            <div class="pet-stat">
+                                <div class="stat-value">38.2</div>
+                                <div class="stat-label">体温 (°C)</div>
+                            </div>
+                            <div class="pet-stat">
+                                <div class="stat-value">A级</div>
+                                <div class="stat-label">健康评级</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="health-section">
+                    <h3 class="section-title"><i class="fas fa-syringe"></i> 疫苗接种记录</h3>
+                    <div class="health-records">
+                        <div class="record-card">
+                            <div class="record-date">2023年10月15日</div>
+                            <div class="record-details">
+                                <p><strong>疫苗名称：</strong>狂犬疫苗</p>
+                                <p><strong>品牌：</strong>瑞比克</p>
+                                <p><strong>接种机构：</strong>安心宠物医院</p>
+                            </div>
+                        </div>
+                        <div class="record-card">
+                            <div class="record-date">2023年7月20日</div>
+                            <div class="record-details">
+                                <p><strong>疫苗名称：</strong>六联疫苗</p>
+                                <p><strong>品牌：</strong>卫佳捌</p>
+                                <p><strong>接种机构：</strong>萌宠医疗中心</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="health-section">
+                    <h3 class="section-title"><i class="fas fa-stethoscope"></i> 体检记录</h3>
+                    <div class="health-records">
+                        <div class="record-card">
+                            <div class="record-date">2023年9月5日</div>
+                            <div class="record-details">
+                                <p><strong>体检类型：</strong>年度全面体检</p>
+                                <p><strong>结果：</strong>整体健康，心脏功能正常，牙齿需注意清洁</p>
+                                <p><strong>建议：</strong>增加洁牙骨使用频率，减少零食摄入</p>
+                            </div>
+                        </div>
+                        <div class="record-card">
+                            <div class="record-date">2023年3月12日</div>
+                            <div class="record-details">
+                                <p><strong>体检类型：</strong>皮肤专项检查</p>
+                                <p><strong>结果：</strong>轻微皮屑，季节性过敏</p>
+                                <p><strong>建议：</strong>使用抗过敏沐浴露，补充鱼油</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="health-section">
+                    <h3 class="section-title"><i class="fas fa-pills"></i> 用药记录</h3>
+                    <div class="health-records">
+                        <div class="record-card">
+                            <div class="record-date">2023年8月20日</div>
+                            <div class="record-details">
+                                <p><strong>药品名称：</strong>犬心保</p>
+                                <p><strong>类型：</strong>内驱药</p>
+                                <p><strong>用量：</strong>每月1片</p>
+                            </div>
+                        </div>
+                        <div class="record-card">
+                            <div class="record-date">2023年8月15日</div>
+                            <div class="record-details">
+                                <p><strong>药品名称：</strong>福来恩</p>
+                                <p><strong>类型：</strong>外驱药</p>
+                                <p><strong>用量：</strong>每月1支</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-column">
+                <h3>关于我们</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-building"></i> 品牌故事</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> 团队介绍</a></li>
+                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> 线下门店</a></li>
+                    <li><a href="#"><i class="fas fa-certificate"></i> 资质认证</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>服务中心</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-phone-alt"></i> 客服热线：400-888-1234</a></li>
+                    <li><a href="#"><i class="fas fa-headset"></i> 在线客服</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> 帮助中心</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> 防伪查询</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>商务合作</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-store"></i> 招商加盟</a></li>
+                    <li><a href="#"><i class="fas fa-handshake"></i> 供应商入驻</a></li>
+                    <li><a href="#"><i class="fas fa-coins"></i> 广告服务</a></li>
+                    <li><a href="#"><i class="fas fa-microphone-alt"></i> KOL合作</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>关注我们</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fab fa-weixin"></i> 微信公众号</a></li>
+                    <li><a href="#"><i class="fab fa-weibo"></i> 官方微博</a></li>
+                    <li><a href="#"><i class="fab fa-tiktok"></i> 抖音账号</a></li>
+                    <li><a href="#"><i class="fab fa-xbox"></i> 小红书</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="copyright">
+                © 2023 PetVibe宠物用品一站式购物平台 版权所有 | 设计：petVibe 备案号：ICP备12345678号-9
+            </div>
+        </div>
+    </footer>
+    
+    
+    <div class="modal" id="addPetModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">添加新宠物</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>宠物类型</label>
+                    <select class="form-control">
+                        <option>狗狗</option>
+                        <option>猫咪</option>
+                        <option>兔子</option>
+                        <option>仓鼠</option>
+                        <option>鸟类</option>
+                        <option>爬行类</option>
+                        <option>其他</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>宠物名字</label>
+                    <input type="text" class="form-control" placeholder="请输入宠物名字">
+                </div>
+                
+                <div class="form-group">
+                    <label>出生日期</label>
+                    <input type="date" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>品种</label>
+                    <input type="text" class="form-control" placeholder="例如：金毛寻回犬、波斯猫等">
+                </div>
+                
+                <div class="form-group">
+                    <label>体重（kg）</label>
+                    <input type="number" class="form-control" min="0.1" step="0.1">
+                </div>
+                
+                <div class="form-group">
+                    <label>是否绝育</label>
+                    <select class="form-control">
+                        <option>是</option>
+                        <option>否</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>过敏源或特殊需求</label>
+                    <textarea class="form-control" placeholder="请描述宠物过敏源或特殊需求"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline">取消</button>
+                <button class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 产品数据
+        const products = [
+            {
+                id: 'p1',
+                name: '金毛犬专用成犬粮 12kg',
+                brand: 'ROYAL CANIN',
+                price: 649,
+                oldPrice: 699,
+                category: 'food',
+                description: '特别为金毛犬研制的配方，含益生元等营养元素，促进肠道健康，维护关节健康，添加特殊营养成分，增强皮肤屏障功能。'
+            },
+            {
+                id: 'p2',
+                name: '天然风干牛肉干 1000g',
+                brand: 'ZEAL',
+                price: 198,
+                oldPrice: 258,
+                category: 'snacks',
+                description: '100%天然新西兰草饲牛肉制成，保留天然营养和风味，无谷物、无防腐剂、无人工添加剂，是狗狗最爱的健康零食。'
+            },
+            {
+                id: 'p3',
+                name: '超耐用经典葫芦玩具',
+                brand: 'KONG',
+                price: 89,
+                category: 'toys',
+                description: '特殊橡胶材质制成，耐咬性强，中空设计可填充零食，增加互动乐趣，适合精力旺盛的狗狗。'
+            },
+            {
+                id: 'p4',
+                name: '金毛用除毛梳',
+                brand: 'FURMINATOR',
+                price: 179,
+                category: 'grooming',
+                description: '专业设计的除毛梳，可有效去除脱落毛发，减少宠物在家中掉毛问题，特别适合双层毛发品种。'
+            },
+            {
+                id: 'p5',
+                name: '智能饮水机',
+                brand: 'PETKIT',
+                price: 249,
+                oldPrice: 299,
+                category: 'supplies',
+                description: '循环活水系统，三重过滤保证水质清洁，静音设计，多重安全保护，让宠物随时喝到健康水。'
+            },
+            {
+                id: 'p6',
+                name: '天然冻干生骨肉',
+                brand: 'K9',
+                price: 158,
+                category: 'food',
+                description: '100%纯天然新西兰草饲牛羊肉，冷冻干燥技术最大程度保留营养和风味，是理想的生骨肉替代食品。'
+            },
+            {
+                id: 'p7',
+                name: '除臭豆腐猫砂',
+                brand: 'PETSHY',
+                price: 49,
+                category: 'supplies',
+                description: '创新豆腐猫砂，3秒快速结团，可直接冲入马桶，超强除臭能力，天然无尘，环保安全。'
+            },
+            {
+                id: 'p8',
+                name: '宠物用羊奶粉',
+                brand: 'ICHIBAN',
+                price: 109,
+                category: 'food',
+                description: '采用优质羊初乳制成，富含多种营养元素和免疫球蛋白，特别适合幼犬幼猫，也适用于孕期哺乳期宠物。'
+            },
+            {
+                id: 'p9',
+                name: '防水宠物雨衣',
+                brand: 'Hoopet',
+                price: 129,
+                oldPrice: 159,
+                category: 'clothing',
+                description: '防水透气面料，舒适贴合宠物体型，可调节松紧带，反光条设计，适合雨雪天气外出使用。'
+            },
+            {
+                id: 'p10',
+                name: '宠物关节保护片',
+                brand: '卫仕',
+                price: 89,
+                category: 'medicine',
+                description: '含葡萄糖胺、软骨素等关节保护成分，帮助缓解关节炎疼痛，改善关节功能，延缓关节老化。'
+            },
+            {
+                id: 'p11',
+                name: '智能定位项圈',
+                brand: 'Pawtrack',
+                price: 359,
+                category: 'supplies',
+                description: 'GPS定位技术，手机APP实时查看位置，设置安全区域，离开安全范围自动提醒，超长待机。'
+            },
+            {
+                id: 'p12',
+                name: '猫咪按摩梳',
+                brand: 'FURMINATOR',
+                price: 139,
+                category: 'grooming',
+                description: '特殊设计的按摩梳齿，在梳理毛发的同时起到按摩作用，帮助减少掉毛并促进血液循环。'
+            }
+        ];
+
+        // 模态窗交互
+        const addPetBtn = document.getElementById('addPetBtn');
+        const modal = document.getElementById('addPetModal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        addPetBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // 点击模态窗外部关闭
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // 添加购物车动画
+        const cartCount = document.querySelector('.cart-count');
+        let cartItems = 3;
+        
+        function addToCart(event, productId) {
+            event.stopPropagation();
+            
+            const btn = event.currentTarget;
+            // 动画效果
+            btn.innerHTML = '<i class="fas fa-check"></i> 已加入';
+            btn.style.background = '#38b000';
+            btn.style.color = 'white';
+            
+            // 更新购物车数量
+            cartItems++;
+            cartCount.textContent = cartItems;
+            
+            // 重置按钮状态
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-cart-plus"></i> 加入购物车';
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+            
+            // 显示加入成功提示
+            showNotification(`商品已加入购物车`);
+        }
+        
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'var(--success)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = 'var(--border-radius)';
+            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(20px)';
+            notification.style.transition = 'opacity 0.3s, transform 0.3s';
+            
+            document.body.appendChild(notification);
+            
+            // 显示通知
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // 3秒后移除通知
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // 宠物选择交互
+        const petItems = document.querySelectorAll('.pet-item');
+        petItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // 移除所有活跃状态
+                petItems.forEach(i => i.classList.remove('active'));
+                
+                // 添加当前活跃状态
+                this.classList.add('active');
+                
+                // 更新欢迎信息中的宠物名
+                const petName = this.querySelector('span').textContent.split(' ')[0];
+                const welcomeTitle = document.querySelector('.welcome-title');
+                welcomeTitle.textContent = `欢迎来到PetVibe，${petName}的主人!`;
+            });
+        });
+        
+        // 页面切换功能
+        function switchPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // 显示目标页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 特殊页面处理
+            if (pageId === 'shop') {
+                renderShopPage();
+            }
+        }
+        
+        // 渲染商城页
+        function renderShopPage() {
+            const shopContent = document.querySelector('#shopContent .products-grid');
+            shopContent.innerHTML = '';
+            
+            products.forEach(product => {
+                shopContent.innerHTML += `
+                    <div class="product-card" onclick="viewProductDetail('${product.id}')">
+                        <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFD8B8);"></div>
+                        <div class="product-details">
+                            <div class="product-brand">${product.brand}</div>
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">
+                                <span class="current-price">¥${product.price}</span>
+                                ${product.oldPrice ? `<span class="old-price">¥${product.oldPrice}</span>` : ''}
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart(event, '${product.id}')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        // 查看商品详情
+        function viewProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const detailPage = document.getElementById('productDetail');
+            detailPage.style.display = 'block';
+            document.getElementById('shopContent').style.display = 'none';
+            
+            detailPage.innerHTML = `
+                <div class="back-to-shop" onclick="document.getElementById('shopContent').style.display='block'; detailPage.style.display='none';">
+                    <i class="fas fa-arrow-left"></i> 返回商城
+                </div>
+                <div class="product-detail-content">
+                    <div class="product-large-image"></div>
+                    <div class="product-info">
+                        <h2>${product.name}</h2>
+                        <div class="product-brand">${product.brand}</div>
+                        <div class="detail-price">
+                            <span class="current-price-lg">¥${product.price}</span>
+                            ${product.oldPrice ? `<span class="old-price-lg">¥${product.oldPrice}</span>` : ''}
+                        </div>
+                        <div class="product-description">
+                            <p>${product.description}</p>
+                        </div>
+                        <div class="product-actions">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn">-</button>
+                                <input type="number" class="quantity-input" value="1" min="1">
+                                <button class="quantity-btn">+</button>
+                            </div>
+                            <button class="btn btn-primary btn-primary-lg" onclick="addToCart(event, '${product.id}'); event.stopPropagation();">加入购物车</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 商品筛选
+        function filterProducts(category) {
+            // 在实际应用中这里应该有筛选逻辑
+            showNotification(`已筛选: ${getCategoryName(category)}`);
+        }
+        
+        function getCategoryName(category) {
+            const names = {
+                'food': '宠物食品',
+                'medicine': '宠物药品',
+                'clothing': '宠物服饰',
+                'supplies': '宠物用品',
+                'toys': '宠物玩具',
+                'grooming': '洗护美容',
+                'sale': '特价商品',
+                'new': '新品上市',
+                'snacks': '宠物零食',
+                'all': '全部商品'
+            };
+            return names[category] || category;
+        }
+        
+        // 从购物车移除商品
+        function removeCartItem(btn) {
+            const cartItem = btn.closest('.cart-item');
+            cartItem.style.opacity = '0';
+            cartItem.style.transform = 'translateX(50px)';
+            cartItem.style.transition = 'all 0.3s ease';
+            
+            setTimeout(() => {
+                cartItem.remove();
+                cartItems--;
+                cartCount.textContent = cartItems;
+                
+                if (cartItems <= 0) {
+                    document.querySelector('.cart-items').innerHTML = '<div style="text-align:center; padding:30px;">购物车是空的</div>';
+                    document.querySelector('.checkout-btn').disabled = true;
+                }
+            }, 300);
+        }
+        
+        // 页面滚动动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加初始动画
+            const animateElements = document.querySelectorAll('.animate-fade');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+            });
+            
+            setTimeout(() => {
+                animateElements.forEach(el => {
+                    el.style.animationPlayState = 'running';
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

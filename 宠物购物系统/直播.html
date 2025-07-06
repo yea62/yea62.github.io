@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetLive - 宠物直播带货平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #FF8C00;      /* 深橙色 */
+            --secondary: #FFA500;    /* 橙色 */
+            --accent: #FFD700;       /* 金色 */
+            --dark: #2D2D2D;          /* 深灰色 */
+            --light: #FFF8E1;        /* 浅黄色 */
+            --light-bg: #FFF9F0;     /* 浅米白 */
+            --success: #38b000;
+            --gray: #6c757d;
+            --light-gray: #e9e2d0;
+            --border-radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background: var(--light-bg);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 20px 0;
+            display: block;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-icon {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-icon:hover {
+            color: var(--accent);
+        }
+        
+        .nav-icon .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 12px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding: 10px 15px 10px 40px;
+            border-radius: 30px;
+            border: none;
+            width: 250px;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        /* 直播区 */
+        .live-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+        
+        /* 主直播播放器 */
+        .main-live {
+            flex: 2;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: black;
+            position: relative;
+        }
+        
+        .live-player {
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #444, #222);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        
+        .live-player .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .streamer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .streamer-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+        
+        .streamer-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .streamer-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 15px;
+            border-radius: 20px;
+        }
+        
+        .live-controls {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 20px;
+            color: white;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .product-highlight {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 直播聊天区 */
+        .live-chat {
+            flex: 1;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            max-height: 600px;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h3 {
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        .online-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            margin-right: 10px;
+        }
+        
+        .username {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .message-time {
+            color: var(--gray);
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .message-content {
+            background: var(--light);
+            padding: 12px 15px;
+            border-radius: 0 10px 10px 10px;
+            display: inline-block;
+            max-width: 80%;
+        }
+        
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--light-gray);
+            font-size: 16px;
+        }
+        
+        .chat-input button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        /* 商品展示区 */
+        .products-section {
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .countdown {
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .badge-hot {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 10;
+        }
+        
+        .product-image {
+            height: 220px;
+            background: linear-gradient(45deg, #FFE8D6, #FFF9F0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .product-image i {
+            font-size: 80px;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+        
+        .product-details {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+            min-height: 60px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .product-original-price {
+            color: var(--gray);
+            text-decoration: line-through;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .sale-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .buy-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .buy-button:hover {
+            background: #e67300;
+        }
+        
+        .sold-out {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* 热门主播区 */
+        .streamers-section {
+            background: linear-gradient(135deg, rgba(255, 166, 0, 0.05), rgba(255, 140, 0, 0.05));
+            padding: 60px 20px;
+            margin: 50px 0;
+        }
+        
+        .streamers-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .streamers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+        }
+        
+        .streamer-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .streamer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .streamer-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto 15px;
+            border: 4px solid var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+        }
+        
+        .streamer-name-large {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .streamer-category {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .streamer-stats-large {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item-large {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--dark);
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .follow-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 8px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .follow-btn:hover {
+            background: var(--light);
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-logo i {
+            color: var(--accent);
+        }
+        
+        .footer-desc {
+            margin-bottom: 20px;
+            color: #ddd;
+            line-height: 1.8;
+        }
+        
+        .footer-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .download-app {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .app-download {
+            background: #333;
+            border-radius: 10px;
+            padding: 10px;
+            width: 130px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .app-download:hover {
+            background: #444;
+        }
+        
+        .app-download i {
+            font-size: 30px;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .app-name {
+            font-size: 14px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .live-container {
+                flex-direction: column;
+            }
+            
+            .live-player {
+                height: 500px;
+            }
+            
+            .live-chat {
+                max-height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 15px;
+            }
+            
+            .logo {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            .search-box input {
+                width: 200px;
+            }
+            
+            .live-player {
+                height: 400px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-box input {
+                width: 150px;
+            }
+            
+            .streamer-stats {
+                display: none;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-paw"></i>
+            <span>PetLive</span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#" class="active">首页</a></li>
+            <li><a href="#">直播</a></li>
+            <li><a href="#">热门主播</a></li>
+            <li><a href="#">宠物商城</a></li>
+            <li><a href="#">优惠活动</a></li>
+        </ul>
+        
+        <div class="nav-icons">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索主播/商品...">
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="badge">5</span>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+            <div class="nav-icon">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 直播区 -->
+    <div class="live-container">
+        <!-- 主直播区 -->
+        <div class="main-live">
+            <div class="live-player">
+                <div class="product-highlight">
+                    <i class="fas fa-fire"></i>
+                    热门推荐：宠物智能喂食器限时折扣
+                </div>
+                
+                <div class="overlay">
+                    <div class="streamer-info">
+                        <div class="streamer-avatar"></div>
+                        <div>
+                            <div class="streamer-name">宠物达人-小美</div>
+                            <div class="streamer-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-eye"></i> 2.3万
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-heart"></i> 1.5万
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="live-controls">
+                        <div class="control-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="control-btn">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="control-btn">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 聊天区 -->
+        <div class="live-chat">
+            <div class="chat-header">
+                <h3>直播聊天</h3>
+                <div class="online-count">
+                    <i class="fas fa-users"></i> 23,458 人在线
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">猫奴小张</span>
+                        <span class="message-time">11:23</span>
+                    </div>
+                    <div class="message-content">
+                        这个猫粮有试用装吗？想先买点试试
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">狗狗守护者</span>
+                        <span class="message-time">11:24</span>
+                    </div>
+                    <div class="message-content">
+                        主播主播，金毛可以吃这个粮吗？一岁大
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">PetLive官方</span>
+                        <span class="message-time">11:25</span>
+                    </div>
+                    <div class="message-content" style="background: #e6f7ff; border-left: 3px solid var(--accent);">
+                        ⚡️ <b>系统消息</b>: 用户「宠物之家」获得幸运福袋
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">小美主播</span>
+                        <span class="message-time">11:26</span>
+                    </div>
+                    <div class="message-content" style="background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 215, 0, 0.1));">
+                        @狗狗守护者 金毛完全没问题！我们现在有买二送一活动，超级划算！
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">爱宠一族</span>
+                        <span class="message-time">11:27</span>
+                    </div>
+                    <div class="message-content">
+                        已下单三袋！期待我家猫主子喜欢
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">喵星人</span>
+                        <span class="message-time">11:28</span>
+                    </div>
+                    <div class="message-content">
+                        主播刚才展示的猫咪玩具还有吗？
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <div class="chat-input">
+                    <input type="text" placeholder="和主播聊聊吧...">
+                    <button><i class="far fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 商品展示区 -->
+    <section class="products-section">
+        <div class="section-header">
+            <h2 class="section-title">本场直播商品</h2>
+            <div class="countdown">
+                <i class="fas fa-clock"></i> 限时折扣：<span id="countdown">19:38</span>
+            </div>
+        </div>
+        
+        <div class="products-grid">
+            <!-- 商品1 -->
+            <div class="product-card">
+                <div class="badge-hot">热卖中</div>
+                <div class="product-image">
+                    <i class="fas fa-bone"></i>
+                </div>
+                <div class="product-details">
+                    <div class="product-name">全价全期犬粮（通用型）</div>
+                    <div class="product-description">富含多种维生素和矿物质，满足狗狗不同阶段的营养需求</div>
+                    <div class="product-price">¥169.00</div>
+                    <div class="product-original-price">¥229.00</div>
+                    <div class="sale-info">
+                        <div class="sold-out">已售 3,245件</div>
+                        <button class="buy-button"><i class="fas fa-cart-plus"></i> 抢购</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <i class="fas fa-cat"></i>
+                </div>
+                <div class="product-details">
+                    <div class="product-name">益生菌猫粮 1.5kg</div>
+                    <div class="product-description">添加益生菌成分，呵护猫咪肠胃健康，减少软便情况</div>
+                    <div class="product-price">¥129.00</div>
+                    <div class="product-original-price">¥169.00</div>
+                    <div class="sale-info">
+                        <div class="sold-out">已售 1,862件</div>
+                        <button class="buy-button"><i class="fas fa-cart-plus"></i> 抢购</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品3 -->
+            <div class="product-card">
+                <div class="badge-hot">新品</div>
+                <div class="product-image">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="product-details">
+                    <div class="product-name">智能喂食器 WIFI版</div>
+                    <div class="product-description">手机APP远程控制，定时定量喂食，双电源保障</div>
+                    <div class="product-price">¥459.00</div>
+                    <div class="product-original-price">¥699.00</div>
+                    <div class="sale-info">
+                        <div class="sold-out">已售 542件</div>
+                        <button class="buy-button"><i class="fas fa-cart-plus"></i> 抢购</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <i class="fas fa-shower"></i>
+                </div>
+                <div class="product-details">
+                    <div class="product-name">宠物专用沐浴露</div>
+                    <div class="product-description">无泪配方，柔顺毛发，多种香型可选</div>
+                    <div class="product-price">¥49.90</div>
+                    <div class="product-original-price">¥79.00</div>
+                    <div class="sale-info">
+                        <div class="sold-out">已售 2,123件</div>
+                        <button class="buy-button"><i class="fas fa-cart-plus"></i> 抢购</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 热门主播区 -->
+    <section class="streamers-section">
+        <div class="streamers-container">
+            <div class="section-header">
+                <h2 class="section-title">热门主播</h2>
+            </div>
+            
+            <div class="streamers-grid">
+                <!-- 主播1 -->
+                <div class="streamer-card">
+                    <div class="streamer-avatar-large"></div>
+                    <div class="streamer-name-large">小美老师</div>
+                    <div class="streamer-category">猫咪专家</div>
+                    <div class="streamer-stats-large">
+                        <div class="stat-item-large">
+                            <div class="stat-number">68.5万</div>
+                            <div class="stat-label">粉丝</div>
+                        </div>
+                        <div class="stat-item-large">
+                            <div class="stat-number">320</div>
+                            <div class="stat-label">直播</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">关注</button>
+                </div>
+                
+                <!-- 主播2 -->
+                <div class="streamer-card">
+                    <div class="streamer-avatar-large"></div>
+                    <div class="streamer-name-large">狗爸王大锤</div>
+                    <div class="streamer-category">训犬达人</div>
+                    <div class="streamer-stats-large">
+                        <div class="stat-item-large">
+                            <div class="stat-number">52.3万</div>
+                            <div class="stat-label">粉丝</div>
+                        </div>
+                        <div class="stat-item-large">
+                            <div class="stat-number">295</div>
+                            <div class="stat-label">直播</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">关注</button>
+                </div>
+                
+                <!-- 主播3 -->
+                <div class="streamer-card">
+                    <div class="streamer-avatar-large"></div>
+                    <div class="streamer-name-large">宠物医生张</div>
+                    <div class="streamer-category">兽医专家</div>
+                    <div class="streamer-stats-large">
+                        <div class="stat-item-large">
+                            <div class="stat-number">37.8万</div>
+                            <div class="stat-label">粉丝</div>
+                        </div>
+                        <div class="stat-item-large">
+                            <div class="stat-number">181</div>
+                            <div class="stat-label">直播</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">关注</button>
+                </div>
+                
+                <!-- 主播4 -->
+                <div class="streamer-card">
+                    <div class="streamer-avatar-large"></div>
+                    <div class="streamer-name-large">兔兔饲养员</div>
+                    <div class="streamer-category">小宠专家</div>
+                    <div class="streamer-stats-large">
+                        <div class="stat-item-large">
+                            <div class="stat-number">24.6万</div>
+                            <div class="stat-label">粉丝</div>
+                        </div>
+                        <div class="stat-item-large">
+                            <div class="stat-number">135</div>
+                            <div class="stat-label">直播</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">关注</button>
+                </div>
+                
+                <!-- 主播5 -->
+                <div class="streamer-card">
+                    <div class="streamer-avatar-large"></div>
+                    <div class="streamer-name-large">宠物美容师JoJo</div>
+                    <div class="streamer-category">美容专家</div>
+                    <div class="streamer-stats-large">
+                        <div class="stat-item-large">
+                            <div class="stat-number">42.1万</div>
+                            <div class="stat-label">粉丝</div>
+                        </div>
+                        <div class="stat-item-large">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">直播</div>
+                        </div>
+                    </div>
+                    <button class="follow-btn">关注</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <div class="footer-logo">
+                    <i class="fas fa-paw"></i>
+                    <span>PetLive 直播平台</span>
+                </div>
+                <p class="footer-desc">
+                    PetLive是中国领先的宠物直播带货平台，连接宠物品牌与爱宠人士，
+                    提供专业、有趣的宠物直播内容，打造全方位的宠物生活服务生态。
+                </p>
+                <div class="download-app">
+                    <div class="app-download">
+                        <i class="fab fa-apple"></i>
+                        <div class="app-name">App Store</div>
+                    </div>
+                    <div class="app-download">
+                        <i class="fab fa-android"></i>
+                        <div class="app-name">Android</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h3 class="footer-title">快捷链接</h3>
+                <ul class="footer-links">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">主播招募</a></li>
+                    <li><a href="#">品牌入驻</a></li>
+                    <li><a href="#">宠物社区</a></li>
+                    <li><a href="#">常见问题</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3 class="footer-title">购物指南</h3>
+                <ul class="footer-links">
+                    <li><a href="#">购物流程</a></li>
+                    <li><a href="#">优惠活动</a></li>
+                    <li><a href="#">会员说明</a></li>
+                    <li><a href="#">品牌大全</a></li>
+                    <li><a href="#">运费政策</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-links">
+                <h3 class="footer-title">联系我们</h3>
+                <ul class="footer-links">
+                    <li><a href="#">客服热线: 400-888-1234</a></li>
+                    <li><a href="#">商务合作: bd@petlive.com</a></li>
+                    <li><a href="#">主播合作: stream@petlive.com</a></li>
+                    <li><a href="#">公司地址: 上海市浦东新区张江高科技园区</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2023 PetLive 宠物直播平台 版权所有 | 沪ICP备12345678号
+        </div>
+    </footer>
+    
+    <script>
+        // 倒计时功能
+        function startCountdown() {
+            let time = 60 * 30; // 30分钟
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                
+                countdownElement.textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (time <= 0) {
+                    clearInterval(timer);
+                    countdownElement.textContent = "活动已结束";
+                }
+                
+                time--;
+            }, 1000);
+        }
+        
+        // 购买按钮效果
+        document.querySelectorAll('.buy-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                
+                // 按钮动画效果
+                this.innerHTML = '<i class="fas fa-check"></i> 已加入购物车';
+                this.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.background = '';
+                }, 2000);
+            });
+        });
+        
+        // 关注按钮效果
+        document.querySelectorAll('.follow-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent === '关注') {
+                    this.textContent = '已关注';
+                    this.style.background = 'var(--light)';
+                    this.style.color = 'var(--success)';
+                    this.style.borderColor = 'var(--success)';
+                } else {
+                    this.textContent = '关注';
+                    this.style.background = '';
+                    this.style.color = '';
+                    this.style.borderColor = '';
+                }
+            });
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            startCountdown();
+            
+            // 滚动到最新消息
+            const chatMessages = document.querySelector('.chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // 模拟新消息
+            setInterval(() => {
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message';
+                newMessage.innerHTML = `
+                    <div class="message-header">
+                        <div class="user-avatar"></div>
+                        <span class="username">新用户${Math.floor(Math.random()*10000)}</span>
+                        <span class="message-time">刚刚</span>
+                    </div>
+                    <div class="message-content">
+                        主播展示的产品太棒了！我要下单
+                    </div>
+                `;
+                
+                chatMessages.appendChild(newMessage);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 10000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetVibe - 门店位置</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #FF8C00;      /* 深橙色 */
+            --secondary: #FFA500;     /* 橙色 */
+            --accent: #FFD700;        /* 金色 */
+            --light: #FFF8E1;        /* 浅黄色 */
+            --dark: #333;             /* 深灰色 */
+            --gray: #6c757d;
+            --light-gray: #e9e2d0;
+            --border-radius: 12px;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FFF9F0, #FFE8D6);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部 */
+        header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .logo i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+        
+        .page-title {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 地图区域 */
+        .map-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin: 50px 0;
+        }
+        
+        .map-view {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            background: #2D2D2D;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6a7c94, #3b4e6d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            font-weight: 300;
+            text-align: center;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .map-controls button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--primary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0 5px;
+        }
+        
+        .map-controls button:hover {
+            background: var(--light);
+        }
+        
+        /* 门店列表 */
+        .store-list {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary);
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 120px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .store-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .store-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .store-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .store-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .store-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            margin-right: 20px;
+        }
+        
+        .store-info h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .store-info .store-city {
+            font-weight: 500;
+            color: var(--gray);
+        }
+        
+        .store-address {
+            font-size: 18px;
+            line-height: 1.8;
+            padding-left: 15px;
+            border-left: 3px solid var(--light-gray);
+            margin: 20px 0;
+        }
+        
+        .store-meta {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .store-hours {
+            color: var(--gray);
+            font-size: 16px;
+        }
+        
+        .store-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .store-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #e67300;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--light);
+        }
+        
+        .store-actions i {
+            margin-right: 8px;
+        }
+        
+        /* 特色服务 */
+        .services {
+            margin: 50px 0;
+            text-align: center;
+        }
+        
+        .services h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--dark);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--light), var(--accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            color: var(--primary);
+            margin: 0 auto 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 15px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .footer-logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .contact-info {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .copyright {
+            margin-top: 30px;
+            color: #adb5bd;
+            font-size: 14px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            .map-container {
+                flex-direction: column;
+            }
+            
+            .map-view {
+                width: 100%;
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .map-view {
+                height: 350px;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-paw"></i>
+                <span>PetVibe</span>
+            </div>
+            <h1 class="page-title">我们的门店位置</h1>
+            <p class="page-subtitle">为您提供专业、贴心的宠物服务</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- 地图和门店列表 -->
+        <div class="map-container">
+            <div class="map-view">
+                <div class="map-placeholder">
+                    <div>
+                        <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3>全国门店位置地图</h3>
+                        <p>点击右侧门店可查看具体位置</p>
+                    </div>
+                </div>
+                <div class="map-controls">
+                    <button><i class="fas fa-plus"></i></button>
+                    <button><i class="fas fa-minus"></i></button>
+                    <button><i class="fas fa-location-arrow"></i></button>
+                </div>
+            </div>
+            
+            <div class="store-list">
+                <h2 class="section-title">全国门店一览</h2>
+                <div class="store-cards">
+                    <!-- 北京门店 -->
+                    <div class="store-card">
+                        <div class="store-header">
+                            <div class="store-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="store-info">
+                                <h3>北京旗舰店</h3>
+                                <div class="store-city">北京市 · 朝阳区</div>
+                            </div>
+                        </div>
+                        <div class="store-address">
+                            百子湾西里403号楼11层1105
+                        </div>
+                        <div class="store-meta">
+                            <div class="store-hours">
+                                <i class="far fa-clock"></i> 营业时间: 9:00-21:00
+                            </div>
+                            <div class="store-actions">
+                                <button class="btn-primary" onclick="navigateToStore('beijing')">
+                                    <i class="fas fa-directions"></i> 导航
+                                </button>
+                                <button class="btn-outline" onclick="callStore('010-65654321')">
+                                    <i class="fas fa-phone"></i> 电话
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 贵阳门店 -->
+                    <div class="store-card">
+                        <div class="store-header">
+                            <div class="store-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="store-info">
+                                <h3>贵阳体验店</h3>
+                                <div class="store-city">贵州省 · 贵阳市</div>
+                            </div>
+                        </div>
+                        <div class="store-address">
+                            云岩区银海元隆商场1层
+                        </div>
+                        <div class="store-meta">
+                            <div class="store-hours">
+                                <i class="far fa-clock"></i> 营业时间: 9:30-21:30
+                            </div>
+                            <div class="store-actions">
+                                <button class="btn-primary" onclick="navigateToStore('guiyang')">
+                                    <i class="fas fa-directions"></i> 导航
+                                </button>
+                                <button class="btn-outline" onclick="callStore('0851-88567890')">
+                                    <i class="fas fa-phone"></i> 电话
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 上海门店 -->
+                    <div class="store-card">
+                        <div class="store-header">
+                            <div class="store-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="store-info">
+                                <h3>上海概念店</h3>
+                                <div class="store-city">上海市 · 虹口区</div>
+                            </div>
+                        </div>
+                        <div class="store-address">
+                            武康路258号
+                        </div>
+                        <div class="store-meta">
+                            <div class="store-hours">
+                                <i class="far fa-clock"></i> 营业时间: 10:00-22:00
+                            </div>
+                            <div class="store-actions">
+                                <button class="btn-primary" onclick="navigateToStore('shanghai')">
+                                    <i class="fas fa-directions"></i> 导航
+                                </button>
+                                <button class="btn-outline" onclick="callStore('021-54327654')">
+                                    <i class="fas fa-phone"></i> 电话
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 特色服务 -->
+        <div class="services">
+            <h2>门店特色服务</h2>
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <h3>宠物美容</h3>
+                    <p>专业美容师团队为您的爱宠提供全方位美容、洗浴、修剪服务</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>健康咨询</h3>
+                    <p>专业兽医提供健康咨询、疫苗注射和常规体检服务</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3>精选商品</h3>
+                    <p>提供各类优质宠物食品、玩具、用品一站式选购</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-paw"></i>
+                    <span>PetVibe 宠物生活馆</span>
+                </div>
+                <p>为爱宠提供最专业、贴心的服务体验</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>400-888-1234</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>service@petvibe.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-weixin"></i>
+                        <span>PetVibeOfficial</span>
+                    </div>
+                </div>
+                
+                <p class="copyright">© 2023 PetVibe宠物生活馆 版权所有 | 打造宠物健康快乐生活</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 门店导航功能
+        function navigateToStore(store) {
+            let address = '';
+            
+            switch(store) {
+                case 'beijing':
+                    address = "北京市朝阳区百子湾西里403号楼11层1105";
+                    break;
+                case 'guiyang':
+                    address = "贵州省贵阳市云岩区银海元隆商场1层";
+                    break;
+                case 'shanghai':
+                    address = "上海市虹口区武康路258号";
+                    break;
+            }
+            
+            alert(`正在为您导航到: ${address}\n即将打开地图应用...`);
+        }
+        
+        // 拨打门店电话
+        function callStore(phone) {
+            alert(`正在拨打门店电话: ${phone}`);
+        }
+        
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const storeCards = document.querySelectorAll('.store-card');
+            
+            storeCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 * index);
+            });
+        });
+    </script>
+</body>
+</html>
