@@ -15,12 +15,12 @@
         }
         
         :root {
-            --primary: #FF8C00;      /* 深橙色 */
-            --secondary: #FFA500;    /* 橙色 */
-            --accent: #FFD700;       /* 金色 */
-            --dark: #2D2D2D;          /* 深灰色 */
-            --light: #FFF8E1;        /* 浅黄色 */
-            --light-bg: #FFF9F0;     /* 浅米白 */
+            --primary: #FF8C00;     
+            --secondary: #FFA500;    
+            --accent: #FFD700;      
+            --dark: #2D2D2D;         
+            --light: #FFF8E1;       
+            --light-bg: #FFF9F0;    
             --success: #38b000;
             --gray: #6c757d;
             --light-gray: #e9e2d0;
@@ -36,7 +36,7 @@
             overflow-x: hidden;
         }
         
-        /* 导航栏 */
+        
         .navbar {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
@@ -151,7 +151,7 @@
             color: var(--gray);
         }
         
-        /* 直播区 */
+        
         .live-container {
             display: flex;
             max-width: 1400px;
@@ -160,7 +160,7 @@
             gap: 30px;
         }
         
-        /* 主直播播放器 */
+        
         .main-live {
             flex: 2;
             border-radius: var(--border-radius);
@@ -264,7 +264,7 @@
             gap: 10px;
         }
         
-        /* 直播聊天区 */
+      
         .live-chat {
             flex: 1;
             background: white;
@@ -366,8 +366,7 @@
             font-size: 20px;
             cursor: pointer;
         }
-        
-        /* 商品展示区 */
+       
         .products-section {
             max-width: 1400px;
             margin: 50px auto;
@@ -519,7 +518,7 @@
             font-weight: 600;
         }
         
-        /* 热门主播区 */
+        
         .streamers-section {
             background: linear-gradient(135deg, rgba(255, 166, 0, 0.05), rgba(255, 140, 0, 0.05));
             padding: 60px 20px;
@@ -609,7 +608,7 @@
             background: var(--light);
         }
         
-        /* 页脚 */
+       
         footer {
             background: var(--dark);
             color: white;
@@ -717,7 +716,7 @@
             font-size: 14px;
         }
         
-        /* 响应式设计 */
+        
         @media (max-width: 1200px) {
             .live-container {
                 flex-direction: column;
@@ -779,8 +778,9 @@
         }
     </style>
 </head>
+<!--元宝、直播、783~1272-->
 <body>
-    <!-- 导航栏 -->
+   
     <nav class="navbar">
         <div class="logo">
             <i class="fas fa-paw"></i>
@@ -814,9 +814,9 @@
         </div>
     </nav>
     
-    <!-- 直播区 -->
+   
     <div class="live-container">
-        <!-- 主直播区 -->
+       
         <div class="main-live">
             <div class="live-player">
                 <div class="product-highlight">
@@ -854,7 +854,7 @@
             </div>
         </div>
         
-        <!-- 聊天区 -->
+        
         <div class="live-chat">
             <div class="chat-header">
                 <h3>直播聊天</h3>
@@ -940,7 +940,7 @@
         </div>
     </div>
     
-    <!-- 商品展示区 -->
+    
     <section class="products-section">
         <div class="section-header">
             <h2 class="section-title">本场直播商品</h2>
@@ -950,7 +950,7 @@
         </div>
         
         <div class="products-grid">
-            <!-- 商品1 -->
+           
             <div class="product-card">
                 <div class="badge-hot">热卖中</div>
                 <div class="product-image">
@@ -968,7 +968,7 @@
                 </div>
             </div>
             
-            <!-- 商品2 -->
+           
             <div class="product-card">
                 <div class="product-image">
                     <i class="fas fa-cat"></i>
@@ -985,7 +985,7 @@
                 </div>
             </div>
             
-            <!-- 商品3 -->
+           
             <div class="product-card">
                 <div class="badge-hot">新品</div>
                 <div class="product-image">
@@ -1003,7 +1003,7 @@
                 </div>
             </div>
             
-            <!-- 商品4 -->
+           
             <div class="product-card">
                 <div class="product-image">
                     <i class="fas fa-shower"></i>
@@ -1022,7 +1022,7 @@
         </div>
     </section>
     
-    <!-- 热门主播区 -->
+   
     <section class="streamers-section">
         <div class="streamers-container">
             <div class="section-header">
@@ -1030,7 +1030,7 @@
             </div>
             
             <div class="streamers-grid">
-                <!-- 主播1 -->
+               
                 <div class="streamer-card">
                     <div class="streamer-avatar-large"></div>
                     <div class="streamer-name-large">小美老师</div>
@@ -1048,7 +1048,7 @@
                     <button class="follow-btn">关注</button>
                 </div>
                 
-                <!-- 主播2 -->
+                
                 <div class="streamer-card">
                     <div class="streamer-avatar-large"></div>
                     <div class="streamer-name-large">狗爸王大锤</div>
@@ -1066,7 +1066,7 @@
                     <button class="follow-btn">关注</button>
                 </div>
                 
-                <!-- 主播3 -->
+                
                 <div class="streamer-card">
                     <div class="streamer-avatar-large"></div>
                     <div class="streamer-name-large">宠物医生张</div>
@@ -1084,7 +1084,7 @@
                     <button class="follow-btn">关注</button>
                 </div>
                 
-                <!-- 主播4 -->
+                
                 <div class="streamer-card">
                     <div class="streamer-avatar-large"></div>
                     <div class="streamer-name-large">兔兔饲养员</div>
@@ -1102,7 +1102,7 @@
                     <button class="follow-btn">关注</button>
                 </div>
                 
-                <!-- 主播5 -->
+                
                 <div class="streamer-card">
                     <div class="streamer-avatar-large"></div>
                     <div class="streamer-name-large">宠物美容师JoJo</div>
@@ -1123,7 +1123,7 @@
         </div>
     </section>
     
-    <!-- 页脚 -->
+    
     <footer>
         <div class="footer-container">
             <div class="footer-about">
@@ -1186,9 +1186,9 @@
     </footer>
     
     <script>
-        // 倒计时功能
+       
         function startCountdown() {
-            let time = 60 * 30; // 30分钟
+            let time = 60 * 30; 
             const countdownElement = document.getElementById('countdown');
             
             const timer = setInterval(() => {
@@ -1207,12 +1207,12 @@
             }, 1000);
         }
         
-        // 购买按钮效果
+      
         document.querySelectorAll('.buy-button').forEach(button => {
             button.addEventListener('click', function() {
                 const originalText = this.innerHTML;
                 
-                // 按钮动画效果
+               
                 this.innerHTML = '<i class="fas fa-check"></i> 已加入购物车';
                 this.style.background = 'var(--success)';
                 
@@ -1223,7 +1223,7 @@
             });
         });
         
-        // 关注按钮效果
+       
         document.querySelectorAll('.follow-btn').forEach(button => {
             button.addEventListener('click', function() {
                 if (this.textContent === '关注') {
@@ -1240,15 +1240,15 @@
             });
         });
         
-        // 初始化页面
+        
         document.addEventListener('DOMContentLoaded', function() {
             startCountdown();
             
-            // 滚动到最新消息
+           
             const chatMessages = document.querySelector('.chat-messages');
             chatMessages.scrollTop = chatMessages.scrollHeight;
             
-            // 模拟新消息
+            
             setInterval(() => {
                 const newMessage = document.createElement('div');
                 newMessage.className = 'message';

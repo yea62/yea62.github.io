@@ -14,11 +14,11 @@
         }
         
         :root {
-            --primary: #FF8C00;      /* 深橙色 */
-            --secondary: #FFA500;     /* 橙色 */
-            --accent: #FFD700;        /* 金色 */
-            --light: #FFF8E1;        /* 浅黄色 */
-            --dark: #333;             /* 深灰色 */
+            --primary: #FF8C00;     
+            --secondary: #FFA500;    
+            --accent: #FFD700;        
+            --light: #FFF8E1;        
+            --dark: #333;             
             --gray: #6c757d;
             --light-gray: #e9e2d0;
             --border-radius: 12px;
@@ -40,7 +40,7 @@
             padding: 0 20px;
         }
         
-        /* 头部 */
+       
         header {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             color: white;
@@ -104,7 +104,7 @@
             opacity: 0.9;
         }
         
-        /* 地图区域 */
+        
         .map-container {
             display: flex;
             flex-wrap: wrap;
@@ -164,7 +164,7 @@
             background: var(--light);
         }
         
-        /* 门店列表 */
+        
         .store-list {
             flex: 1;
             min-width: 300px;
@@ -298,7 +298,7 @@
             margin-right: 8px;
         }
         
-        /* 特色服务 */
+       
         .services {
             margin: 50px 0;
             text-align: center;
@@ -354,7 +354,7 @@
             line-height: 1.7;
         }
         
-        /* 页脚 */
+       
         footer {
             background: var(--dark);
             color: white;
@@ -400,7 +400,7 @@
             font-size: 14px;
         }
         
-        /* 响应式调整 */
+       
         @media (max-width: 900px) {
             .map-container {
                 flex-direction: column;
@@ -428,7 +428,7 @@
     </style>
 </head>
 <body>
-    <!-- 头部 -->
+    
     <header>
         <div class="container header-content">
             <div class="logo">
@@ -441,7 +441,7 @@
     </header>
     
     <div class="container">
-        <!-- 地图和门店列表 -->
+      <!--元宝、查看具体位置、445~463-->
         <div class="map-container">
             <div class="map-view">
                 <div class="map-placeholder">
@@ -461,7 +461,7 @@
             <div class="store-list">
                 <h2 class="section-title">全国门店一览</h2>
                 <div class="store-cards">
-                    <!-- 北京门店 -->
+                  
                     <div class="store-card">
                         <div class="store-header">
                             <div class="store-icon">
@@ -490,7 +490,7 @@
                         </div>
                     </div>
                     
-                    <!-- 贵阳门店 -->
+                    
                     <div class="store-card">
                         <div class="store-header">
                             <div class="store-icon">
@@ -519,7 +519,7 @@
                         </div>
                     </div>
                     
-                    <!-- 上海门店 -->
+                    
                     <div class="store-card">
                         <div class="store-header">
                             <div class="store-icon">
@@ -551,7 +551,7 @@
             </div>
         </div>
         
-        <!-- 特色服务 -->
+       
         <div class="services">
             <h2>门店特色服务</h2>
             <div class="service-grid">
@@ -582,7 +582,7 @@
         </div>
     </div>
     
-    <!-- 页脚 -->
+    
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -613,7 +613,7 @@
     </footer>
     
     <script>
-        // 门店导航功能
+       
         function navigateToStore(store) {
             let address = '';
             
@@ -632,12 +632,12 @@
             alert(`正在为您导航到: ${address}\n即将打开地图应用...`);
         }
         
-        // 拨打门店电话
+       
         function callStore(phone) {
             alert(`正在拨打门店电话: ${phone}`);
         }
         
-        // 页面加载动画
+        
         document.addEventListener('DOMContentLoaded', function() {
             const storeCards = document.querySelectorAll('.store-card');
             

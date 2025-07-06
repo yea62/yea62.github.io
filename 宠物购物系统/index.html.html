@@ -1185,7 +1185,7 @@
                         <div class="product-card" onclick="viewProductDetail('p2')">
                             <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFB238);">
                                 <span class="sale-badge">特惠</span>
-                             
+                             <!--元宝、插入图片、1189-->
                                 <img src="./风干肉干.jpg" alt="天然风干牛肉干" class="meat-image">
                             </div>
                             <div class="product-details">
@@ -1198,7 +1198,7 @@
                                 <button class="add-to-cart" onclick="add-To-Cart(event, 'p2')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
                             </div>
                         </div>
-                        
+                         <!--元宝、插入图片、1202~1214-->
                         <style>
                         
                         .meat-image {
@@ -1229,7 +1229,7 @@
                                 <button class="addToCart" onclick="addToCart(event, 'p3')"><i class="fas fa-cart-plus"></i> 加入购物车</button>
                             </div>
                         </div>
-                        
+                         <!--元宝、插入图片、1233~1253-->
                         <style>
     
                         .toy-image-container {
@@ -1254,7 +1254,7 @@
                         
                         <div class="product-card" onclick="viewProductDetail('p4')">
                             <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #F25C54);">
-                               
+                                <!--元宝、插入图片、1258~1269-->
                                 <img src="./排毛梳.jpg" alt="FURMINATOR金毛用除毛梳" style="
                                     max-width: 80%;
                                     max-height: 160px;
@@ -1286,7 +1286,7 @@
                     <div class="products-grid">
                         <div class="product-card" onclick="viewProductDetail('p5')">
                             <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FF9E00);">
-                               
+                               <!--元宝、插入图片、1290~1304-->
                                 <img src="./饮水机.jpg" alt="PETKIT智能饮水机" style="
                                     max-width: 90%;
                                     max-height: 180px;
@@ -1316,7 +1316,7 @@
                         
                         <div class="product-card" onclick="viewProductDetail('p6')">
     <div class="product-image" style="background: linear-gradient(to bottom right, #FFE8D6, #FFD166);">
-      
+       <!--元宝、插入图片、1321~1331-->
         <img src="./冻干.jpg" alt="K9天然冻干生骨肉" style="
             display: block;
             max-width: 92%;
@@ -1364,7 +1364,7 @@
                 box-shadow: 0 4px 8px rgba(0,0,0,0.05);
             "></div>
             
-           
+           <!--元宝、插入图片、1368~1378-->
             <img src="./猫砂.jpg" alt="PETSHY除臭豆腐猫砂" style="
                 max-width: 100px;
                 max-height: 120px;
@@ -1431,7 +1431,7 @@
             justify-content: center;
             align-items: center;
         ">
-           
+           <!--元宝、插入图片、1435~1480-->
             <img src="./羊奶粉.jpg" alt="ICHIBAN宠物用羊奶粉" style="
                 max-width: 90%;
                 max-height: 90%;
@@ -1528,7 +1528,7 @@
             </div>
         </div>
         
-        <!-- 购物车页 -->
+       
         <div class="page" id="cart">
             <div class="cart-page">
                 <h2 class="section-title"><i class="fas fa-shopping-cart"></i> 购物车</h2>
@@ -1705,7 +1705,7 @@
         </div>
     </div>
     
-    <!-- 页脚 -->
+    
     <footer>
         <div class="container footer-container">
             <div class="footer-column">
@@ -1818,7 +1818,7 @@
     </div>
     
     <script>
-        // 产品数据
+        
         const products = [
             {
                 id: 'p1',
@@ -1922,7 +1922,7 @@
             }
         ];
 
-        // 模态窗交互
+        
         const addPetBtn = document.getElementById('addPetBtn');
         const modal = document.getElementById('addPetModal');
         const closeModal = document.querySelector('.close-modal');
@@ -1935,14 +1935,14 @@
             modal.style.display = 'none';
         });
         
-        // 点击模态窗外部关闭
+       
         window.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.style.display = 'none';
             }
         });
         
-        // 添加购物车动画
+       
         const cartCount = document.querySelector('.cart-count');
         let cartItems = 3;
         
@@ -1950,27 +1950,26 @@
             event.stopPropagation();
             
             const btn = event.currentTarget;
-            // 动画效果
+           
             btn.innerHTML = '<i class="fas fa-check"></i> 已加入';
             btn.style.background = '#38b000';
             btn.style.color = 'white';
             
-            // 更新购物车数量
+            
             cartItems++;
             cartCount.textContent = cartItems;
             
-            // 重置按钮状态
+           
             setTimeout(() => {
                 btn.innerHTML = '<i class="fas fa-cart-plus"></i> 加入购物车';
                 btn.style.background = '';
                 btn.style.color = '';
             }, 2000);
             
-            // 显示加入成功提示
+            
             showNotification(`商品已加入购物车`);
         }
         
-        // 显示通知
         function showNotification(message) {
             const notification = document.createElement('div');
             notification.textContent = message;
@@ -1989,13 +1988,13 @@
             
             document.body.appendChild(notification);
             
-            // 显示通知
+            
             setTimeout(() => {
                 notification.style.opacity = '1';
                 notification.style.transform = 'translateY(0)';
             }, 10);
             
-            // 3秒后移除通知
+            
             setTimeout(() => {
                 notification.style.opacity = '0';
                 notification.style.transform = 'translateY(20px)';
@@ -2005,40 +2004,40 @@
             }, 3000);
         }
         
-        // 宠物选择交互
+        
         const petItems = document.querySelectorAll('.pet-item');
         petItems.forEach(item => {
             item.addEventListener('click', function() {
-                // 移除所有活跃状态
+                
                 petItems.forEach(i => i.classList.remove('active'));
                 
-                // 添加当前活跃状态
+                
                 this.classList.add('active');
                 
-                // 更新欢迎信息中的宠物名
+                
                 const petName = this.querySelector('span').textContent.split(' ')[0];
                 const welcomeTitle = document.querySelector('.welcome-title');
                 welcomeTitle.textContent = `欢迎来到PetVibe，${petName}的主人!`;
             });
         });
         
-        // 页面切换功能
+        
         function switchPage(pageId) {
-            // 隐藏所有页面
+           
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
-            // 显示目标页面
+           
             document.getElementById(pageId).classList.add('active');
             
-            // 特殊页面处理
+            
             if (pageId === 'shop') {
                 renderShopPage();
             }
         }
         
-        // 渲染商城页
+        
         function renderShopPage() {
             const shopContent = document.querySelector('#shopContent .products-grid');
             shopContent.innerHTML = '';
@@ -2061,7 +2060,7 @@
             });
         }
         
-        // 查看商品详情
+        
         function viewProductDetail(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -2099,9 +2098,9 @@
             `;
         }
         
-        // 商品筛选
+        
         function filterProducts(category) {
-            // 在实际应用中这里应该有筛选逻辑
+            
             showNotification(`已筛选: ${getCategoryName(category)}`);
         }
         
@@ -2121,7 +2120,7 @@
             return names[category] || category;
         }
         
-        // 从购物车移除商品
+        
         function removeCartItem(btn) {
             const cartItem = btn.closest('.cart-item');
             cartItem.style.opacity = '0';
@@ -2140,9 +2139,9 @@
             }, 300);
         }
         
-        // 页面滚动动画
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // 添加初始动画
+           
             const animateElements = document.querySelectorAll('.animate-fade');
             animateElements.forEach(el => {
                 el.style.opacity = '0';
